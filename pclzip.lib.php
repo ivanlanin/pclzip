@@ -5398,7 +5398,12 @@ function PclZipUtilOptionText($p_option)
 // --------------------------------------------------------------------------------
 function PclZipUtilTranslateWinPath($p_path, $p_remove_disk_letter = true)
 {
-    if (stristr(php_uname(), 'windows')) {
+	$disable_functions = ( ini_get( 'disable_functions' ) != '' and ini_get( 'disable_functions' ) != false ) ? array_map( 'trim', preg_split( "/[\s,]+/", ini_get( 'disable_functions' ) ) ) : array();
+	if( extension_loaded( 'suhosin' ) ) {
+		$disable_functions = array_merge( $disable_functions, array_map( 'trim', preg_split( "/[\s,]+/", ini_get( 'suhosin.executor.func.blacklist' ) ) ) );
+	}
+	$os = strtoupper( ( function_exists( 'php_uname' ) and !in_array( 'php_uname', $disable_functions ) and strtoupper( php_uname( 's' ) ) != '' ) ? php_uname( 's' ) : PHP_OS );
+	if( stristr( $os, 'windows' ) !== false ) {
         // ----- Look for potential disk letter
         if (($p_remove_disk_letter) && (($v_position = strpos($p_path, ':')) != false)) {
             $p_path = substr($p_path, $v_position + 1);
