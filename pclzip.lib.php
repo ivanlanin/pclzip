@@ -243,7 +243,7 @@ class PclZip
     //   When a directory is in the list, the directory and its content is added
     //   in the archive.
     //   In this synopsis, the function takes an optional variable list of
-    //   options. See bellow the supported options.
+    //   options. See below the supported options.
     // Parameters :
     //   $p_filelist : An array containing file or directory names, or
     //                 a string containing one filename or one directory name, or
